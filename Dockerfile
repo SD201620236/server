@@ -6,7 +6,6 @@ WORKDIR /server-docker
 COPY . .
 RUN npm install -g
 
-#EXPOSE 3000
+EXPOSE 3000
 
-ENTRYPOINT [ "docker-server" ]
-CMD [ "$PORT" ]
+ENTRYPOINT [ "server-docker" ]

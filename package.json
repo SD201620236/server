@@ -4,20 +4,23 @@
   "description": "",
   "type": "module",
   "main": "index.js",
-  "bin" : {
-    "docker-server": "./server.js"
+  "bin": {
+    "server-docker": "./server.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js $PORT"
   },
   "keywords": [
-    "server",
+    "Servidor",
     "SD",
-    "Container"
+    "Docker"
   ],
   "author": "Saionara Aguiar",
   "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^3.7.0"
+  },
   "dependencies": {
     "express": "^4.17.1"
   }
