@@ -35,11 +35,15 @@ app.get("/info", function(req, res){
 app.post("/info", function(req, res){
     console.log(req.body)
     bancodedados.push(req.body);    
-    res.sendStatus(201)    
+    res.sendStatus(200)
+    //res.send(bancodedados);  
 })
 
 app.get("/recurso", function(req, res){
-    setTimeout()
+    req.setTimeout(10000,()=>{
+        //res.sendStatus(200) 
+    })
+    res.send({"ocupado": false})  
 })
 
 app.post("/recurso", function(req,res){
