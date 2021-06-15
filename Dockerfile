@@ -9,3 +9,4 @@ RUN npm install -g
 EXPOSE 3000
 
 ENTRYPOINT [ "server-docker" ]
+#CMD [$PORT]
