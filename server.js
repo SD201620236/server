@@ -22,11 +22,11 @@ let dados ={
     "eleicao": "valentao",
     "servidores_conhecidos":[
         {
-            "id": "id_server_1",
+            "id": "ramon",
             "url": "url_server_1"
         },
         {
-            "id": "id_server_2",
+            "id": "adrian",
             "url": "url_server_2"
         }
     ]
@@ -43,15 +43,16 @@ app.get("/info", function(req, res){
     res.send(bancodedados);
 });
 
-app.put("/info", function (res, req){
+/*app.put("/info", function (res, req){
     console.log(req.body) 
     bancodedados.push(req.body);    
     //res.sendStatus(200)
     res.send(bancodedados); 
-})
+})*/
 
 app.post("/info", function(req, res){
     bancodedados = req.body;
+    console.log(bancodedados)
     //bancodedados.push(req.body)
     res.send(bancodedados)
 })
@@ -63,40 +64,58 @@ app.get("/recurso", function(req, res){
 })
 
 app.post("/recurso", function(req,res){
-    function recurso() {
-        setTimeout(recurso => res.sendStatus(200) , 10000)
-        //console.log({"ocupado": true})
+    
+    setTimeout(()=>res.status(409).send({"ocupado": true}), 5000)
+    //req.isPaused()
+    /*function recursoOcupado() {
+        setTimeout(()=>res.status(409).send({"ocupado": true}), 5000)
+        //setTimeout(recurso => res.setTimeout() , 10000)
+         console.log({"ocupado": true})
     }
-    recurso();
+    recursoOcupado();
+    function recursoNotOcupado() {
+        setTimeout(()=>res.status(200), 5000)
+        //setTimeout(recurso => res.setTimeout() , 10000)
+        console.log({"ocupado": false})
+    }
+    recursoOcupado();
+    recursoNotOcupado();*/
+    //res.sendStatus(200)
       
 })
 
 app.get("/eleicao", function(req,res){
-//algoritmo valetaõ
-//algoritmo anel
-    /*{
+    res.send({
         "tipo_eleicao": "valentao",
         "eleicao_em_andamento": false
-    } */
+    })
+    // isso tem q ter
 })
 
 app.post("/eleicao", function(req, res){
+    res.sendStatus(403)
+    //bancodedados= req.body ;
+    //console.log(bancodedados)
+    //não vai precisar fazer
 //algoritmo valetaõ
 //algoritmo anel
 })
 
 app.post('/eleicao/coordenador', function(req, res){
-   /* {
-        "coordenador": 2,
-        "id_eleicao": "o id da eleicaoo"
-    }*/
+    res.send(
+        {
+            "coordenador": 2,
+            "id_eleicao": "o id da eleicaoo"
+        }
+    )
+    /* */
 })
 
-const server = app.listen(3000, () => {
-    console.log("Servidor rodando local na porta 3000");
-})
-/*const server = app.listen(parseInt(process.argv[2], '0.0.0.0'), () => {
+/*const server = app.listen(3000, () => {
     console.log("Servidor rodando local na porta 3000");
 })*/
+const server = app.listen(parseInt(process.argv[2], '0.0.0.0'), () => {
+    console.log("Servidor rodando local na porta 3000");
+}) 
 
 
