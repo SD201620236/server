@@ -1,13 +1,19 @@
 'use strict';
 
 import express from "express";
-import { info } from "console";
+//import { info } from "console";
 //import { send } from "process";
 import {Worker, isMainThread, parentPort, workerData} from 'worker_threads'
 import { setTimeout } from "timers";
+//import {bodyParser} from 'body-parser'
+import pkg from 'body-parser';
+const {bodyParser} = pkg;
+const { json } = pkg;
 
 const app = express();
 app.use(express.json())
+app.use(pkg.urlencoded({extended: false}))
+app.use(pkg.json())
 
 var lock;
 
@@ -22,12 +28,8 @@ let dados ={
     "eleicao": "valentao",
     "servidores_conhecidos":[
         {
-            "id": "ramon",
-            "url": "url_server_1"
-        },
-        {
-            "id": "adrian",
-            "url": "url_server_2"
+            "id": "3",
+            "url": "https://sd-mgs.herokuapp.com/"
         }
     ]
 }
@@ -41,6 +43,7 @@ app.get("/", function(req, res){
 
 app.get("/info", function(req, res){
     res.send(bancodedados);
+    console.log(bancodedados)
 });
 
 /*app.put("/info", function (res, req){
@@ -52,6 +55,7 @@ app.get("/info", function(req, res){
 
 app.post("/info", function(req, res){
     bancodedados = req.body;
+    //console.log(req.body.componente)
     console.log(bancodedados)
     //bancodedados.push(req.body)
     res.send(bancodedados)
@@ -93,7 +97,7 @@ app.get("/eleicao", function(req,res){
 })
 
 app.post("/eleicao", function(req, res){
-    res.sendStatus(403)
+    res.sendStatus(200)
     //bancodedados= req.body ;
     //console.log(bancodedados)
     //não vai precisar fazer
@@ -111,11 +115,11 @@ app.post('/eleicao/coordenador', function(req, res){
     /* */
 })
 
-/*const server = app.listen(3000, () => {
+const server = app.listen(3000, () => {
     console.log("Servidor rodando local na porta 3000");
-})*/
-const server = app.listen(parseInt(process.argv[2], '0.0.0.0'), () => {
+})
+/*const server = app.listen(parseInt(process.argv[2], '0.0.0.0'), () => {
     console.log("Servidor rodando local na porta 3000");
-}) 
+}) */
 
 
