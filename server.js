@@ -1,12 +1,13 @@
 'use strict';
 
 import express from "express";
-//import { info } from "console";
-//import { send } from "process";
-import {Worker, isMainThread, parentPort, workerData} from 'worker_threads'
+//import {Worker, isMainThread, parentPort, workerData} from 'worker_threads'
 import { setTimeout } from "timers";
-//import {bodyParser} from 'body-parser'
+
 import pkg from 'body-parser';
+import { resolve } from "path";
+import { rejects } from "assert";
+import { RSA_NO_PADDING } from "constants";
 const {bodyParser} = pkg;
 const { json } = pkg;
 
@@ -69,22 +70,19 @@ app.get("/recurso", function(req, res){
 
 app.post("/recurso", function(req,res){
     
-    setTimeout(()=>res.status(409).send({"ocupado": true}), 5000)
-    //req.isPaused()
-    /*function recursoOcupado() {
-        setTimeout(()=>res.status(409).send({"ocupado": true}), 5000)
-        //setTimeout(recurso => res.setTimeout() , 10000)
-         console.log({"ocupado": true})
+   /* setTimeout(()=>{
+        res.status(409)
+        send({"ocupado": true})
+    }, 1000)*/
+    function esperar(tempo) {
+        return new Promise(((resolve, reject) => setTimeout(resolve, tempo)))
     }
-    recursoOcupado();
-    function recursoNotOcupado() {
-        setTimeout(()=>res.status(200), 5000)
-        //setTimeout(recurso => res.setTimeout() , 10000)
-        console.log({"ocupado": false})
+    async function recursoOcupado() {
+        await esperar(5000)
+        return res.send({"ocupado": true})         
     }
-    recursoOcupado();
-    recursoNotOcupado();*/
-    //res.sendStatus(200)
+    recursoOcupado().then(() => {} );
+    console.log("recurso ocupado")
       
 })
 
@@ -115,11 +113,11 @@ app.post('/eleicao/coordenador', function(req, res){
     /* */
 })
 
-const server = app.listen(3000, () => {
+/*const server = app.listen(3000, () => {
+    console.log("Servidor rodando local na porta 3000");
+})*/
+const server = app.listen(parseInt(process.argv[2], '0.0.0.0'), () => {
     console.log("Servidor rodando local na porta 3000");
 })
-/*const server = app.listen(parseInt(process.argv[2], '0.0.0.0'), () => {
-    console.log("Servidor rodando local na porta 3000");
-}) */
 
 
